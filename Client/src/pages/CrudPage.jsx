@@ -7,6 +7,8 @@ import CowDataForm from '../component/Forms/CowDataForm';
 import MedicalExamsDataForm from '../component/Forms/MedicalExamsDataForm';
 import BirthForm from '../component/Forms/BirthForm';
 import MilkProductionDataForm from '../component/Forms/MilkProductionDataForm';
+import { useNavigate } from 'react-router-dom';
+import LougoutModel from '../component/modal/LougoutModel';
 
 
 export default function CrudPage() {
@@ -20,10 +22,11 @@ export default function CrudPage() {
     const url = import.meta.env.VITE_API_URL;
 
     const [token, setToken] = useState('');
+    const [logout, setLogout] = useState(false);
     const [newEntry, setNewEntry] = useState({});
     const [selectedTab, setSelectedTab] = useState('cow');
     const [data, setData] = useState([]);
-   
+    const navigate = useNavigate();
     
     useEffect(() => {
         const cookies = document.cookie.split('; ').reduce((prev, current) => {
@@ -31,7 +34,7 @@ export default function CrudPage() {
             prev[name] = decodeURIComponent(value);
             return prev;
         }, {});
-        console.log(cookies.jwt);
+        if(!cookies.jwt) navigate('/');
         // Set the token state
         setToken(cookies.jwtToken);
         fetchData(selectedTab);
@@ -84,7 +87,7 @@ export default function CrudPage() {
             <Container maxW="container.md" mt={8}>
                 <Heading mb={4}>Cow Fram Management System</Heading>
                 <Button size="sm" colorScheme="teal" position="absolute" top={4} right={24}>User</Button>
-                <Button size="sm" colorScheme="red" position="absolute" top={4} right={4}>Logout</Button>
+                <Button size="sm" colorScheme="red" position="absolute" top={4} right={4} onClick={()=>setLogout(true)}>Logout</Button>
 
                 <DataTabs setSelectedTab={setSelectedTab} />
 
@@ -122,7 +125,7 @@ export default function CrudPage() {
                            selectedTab={selectedTab}
                            updateData={updateData} 
                            url={url}/>
-                
+                <LougoutModel isOpen={logout} setIsOpen={setLogout} navigate={navigate} />
 
             </Container>
         </>

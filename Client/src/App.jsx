@@ -6,17 +6,12 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 
 export default function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
   
-  const handleLogin = () => {
-      setIsLoggedIn(true);
-    };
 
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <LoginPage onLogin={handleLogin}/>,
+      element: <LoginPage />,
     },
     {
       path: "/crud",
@@ -25,7 +20,6 @@ export default function App() {
   ]);
 
   
-  console.log(isLoggedIn);
   return (
     <>
       <RouterProvider router={router} />

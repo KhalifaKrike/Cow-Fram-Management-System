@@ -28,6 +28,7 @@ export default function LoginPage({ onLogin }) {
             if (response.status == 200) {
                 setCookie('jwt', response.data.token, 1);
                 console.log("yes");
+                navigate('/crud');
             }else{
                 console.log("no");
             }
@@ -39,8 +40,6 @@ export default function LoginPage({ onLogin }) {
     const handleLogin = () => {
         auth();
         //onLogin();
-        navigate('/crud');
-
     }
 
     return (
