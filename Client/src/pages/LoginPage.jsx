@@ -7,6 +7,7 @@ import {
     FormLabel,
     Input,
     Button,
+    useToast,
 } from '@chakra-ui/react';
 import axios from "axios";
 
@@ -14,6 +15,7 @@ import axios from "axios";
 export default function LoginPage({ onLogin }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const toast = useToast();
 
     const navigate = useNavigate();
     const setCookie = (name, value, days) => {
@@ -29,11 +31,16 @@ export default function LoginPage({ onLogin }) {
                 setCookie('jwt', response.data.token, 1);
                 console.log("yes");
                 navigate('/crud');
-            }else{
-                console.log("no");
-            }
+            } 
         } catch (error) {
             console.error(`Error auth :`, error);
+            toast({
+                title: 'Error',
+                description: 'An error occurred while logging in.',
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+            });
         }
     };
 

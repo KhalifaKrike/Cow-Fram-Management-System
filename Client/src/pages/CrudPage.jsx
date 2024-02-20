@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Heading, Button } from '@chakra-ui/react';
+import { Container, Heading, Button, useToast } from '@chakra-ui/react';
 import axios from 'axios';
 import DataTable from '../component/DataTable';
 import DataTabs from '../component/DataTabs';
@@ -21,11 +21,13 @@ export default function CrudPage() {
 
     const url = import.meta.env.VITE_API_URL;
 
+    
     const [token, setToken] = useState('');
     const [logout, setLogout] = useState(false);
     const [newEntry, setNewEntry] = useState({});
     const [selectedTab, setSelectedTab] = useState('cow');
     const [data, setData] = useState([]);
+    const toast = useToast();
     const navigate = useNavigate();
     
     useEffect(() => {
@@ -48,6 +50,13 @@ export default function CrudPage() {
             setData(response.data);
         } catch (error) {
             console.error(`Error fetching ${tab} data:`, error);
+            toast({
+                title: 'Error',
+                description: 'An error occurred while fetching the data.',
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+            });
         }
     };
     const sendData = async () => {
@@ -56,8 +65,22 @@ export default function CrudPage() {
             const response = await axios.post(`${url}${selectedTab}`, newEntry);
             console.log(response.data);
             fetchData(selectedTab);
+            toast({
+                title: 'Success',
+                description: 'Data created successfully.',
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+              });
         } catch (error) {
             console.error(`Error posting data to ${tab} :`, error);
+            toast({
+                title: 'Error',
+                description: 'An error occurred while creating the data.',
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+            });
         }
     }
     const deleteData = async (id) => {
@@ -66,8 +89,22 @@ export default function CrudPage() {
             const response = await axios.delete(`${url}${selectedTab}/${id}`);
             console.log(response.data);
             fetchData(selectedTab);
+            toast({
+                title: 'Success',
+                description: 'Data deleted successfully.',
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+              });
         } catch (error) {
-            console.error(`Error deleting ${tab} data:`, error);
+            console.error(`Error deleting  data:`, error);
+            toast({
+                title: 'Error',
+                description: 'An error occurred while deleting the data.',
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+            });
         }
     }
     const updateData = async (id) => {
@@ -76,8 +113,22 @@ export default function CrudPage() {
             const response = await axios.patch(`${url}${selectedTab}/${id}`, newEntry);
             console.log(response.data);
             fetchData(selectedTab);
+            toast({
+                title: 'Success',
+                description: 'Data updated successfully.',
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+              });
         } catch (error) {
-            console.error(`Error updating ${tab} data:`, error);
+            console.error(`Error updating data:`, error);
+            toast({
+                title: 'Error',
+                description: 'An error occurred while updating the data',
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+            });
         }
     }
 
