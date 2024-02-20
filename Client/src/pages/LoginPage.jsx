@@ -11,7 +11,6 @@ import {
 } from '@chakra-ui/react';
 import axios from "axios";
 
-
 export default function LoginPage({ onLogin }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -31,7 +30,7 @@ export default function LoginPage({ onLogin }) {
                 setCookie('jwt', response.data.token, 1);
                 console.log("yes");
                 navigate('/crud');
-            } 
+            }
         } catch (error) {
             console.error(`Error auth :`, error);
             toast({
@@ -51,30 +50,30 @@ export default function LoginPage({ onLogin }) {
 
     return (
         <>
-            <Box maxW="400px" mx="auto" mt="100px" p="6" borderWidth="1px" borderRadius="md" boxShadow="md">
-                <Heading mb="6">Login</Heading>
-                <FormControl>
-                    <FormLabel>Email</FormLabel>
-                    <Input
-                        type="email"
-                        placeholder="Enter your email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </FormControl>
-                <FormControl mt="4">
-                    <FormLabel>Password</FormLabel>
-                    <Input
-                        type="password"
-                        placeholder="Enter your password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </FormControl>
-                <Button mt="6" colorScheme="teal" onClick={handleLogin}>
-                    Login
-                </Button>
-            </Box>
+                <Box maxW="400px" mx="auto" mt="100px" p="6" borderWidth="1px" borderRadius="md" boxShadow="md">
+                    <Heading mb="6">Login</Heading>
+                    <FormControl>
+                        <FormLabel>Email</FormLabel>
+                        <Input
+                            type="email"
+                            placeholder="Enter your email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </FormControl>
+                    <FormControl mt="4">
+                        <FormLabel>Password</FormLabel>
+                        <Input
+                            type="password"
+                            placeholder="Enter your password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </FormControl>
+                    <Button mt="6" colorScheme="teal" onClick={handleLogin}>
+                        Login
+                    </Button>
+                </Box>
         </>
     );
 };
