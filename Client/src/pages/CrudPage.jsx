@@ -9,6 +9,7 @@ import BirthForm from '../component/Forms/BirthForm';
 import MilkProductionDataForm from '../component/Forms/MilkProductionDataForm';
 import { useNavigate } from 'react-router-dom';
 import LougoutModel from '../component/modal/LougoutModel';
+import ProfileModel from '../component/modal/ProfileModel';
 
 
 export default function CrudPage() {
@@ -23,6 +24,7 @@ export default function CrudPage() {
 
     
     const [token, setToken] = useState('');
+    const [profile, setProfile] = useState(false);
     const [logout, setLogout] = useState(false);
     const [newEntry, setNewEntry] = useState({});
     const [selectedTab, setSelectedTab] = useState('cow');
@@ -36,7 +38,7 @@ export default function CrudPage() {
             prev[name] = decodeURIComponent(value);
             return prev;
         }, {});
-        if(!cookies.jwt) navigate('/');
+        if(!cookies.jwt) navigate('/'); // if not autherized
         // Set the token state
         setToken(cookies.jwtToken);
         fetchData(selectedTab);
@@ -137,7 +139,7 @@ export default function CrudPage() {
 
             <Container maxW="container.md" mt={8}>
                 <Heading mb={4}>Cow Fram Management System</Heading>
-                <Button size="sm" colorScheme="teal" position="absolute" top={4} right={24}>User</Button>
+                <Button size="sm" colorScheme="teal" position="absolute" top={4} right={24} onClick={()=>setProfile(true)}>User</Button>
                 <Button size="sm" colorScheme="red" position="absolute" top={4} right={4} onClick={()=>setLogout(true)}>Logout</Button>
 
                 <DataTabs setSelectedTab={setSelectedTab} />
@@ -177,7 +179,7 @@ export default function CrudPage() {
                            updateData={updateData} 
                            url={url}/>
                 <LougoutModel isOpen={logout} setIsOpen={setLogout} navigate={navigate} />
-
+                <ProfileModel isOpen={profile} setIsOpen={setProfile} /> 
             </Container>
         </>
     );
